@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="#000000" >
     
     <!-- Title Box -->
 
@@ -9,7 +10,7 @@
         android:id="@+id/title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-
+		android:textColor="#FFFFFF"
         android:background="@drawable/border"
         android:padding="5dip"
         android:text="@string/default_title"
@@ -27,6 +28,7 @@
             android:layout_height="150dp"
             android:background="@drawable/border"
             android:padding="5dip"
+            android:textColor="#D7D7D7"
             android:text="@string/description_default" />
 
    </ScrollView>
