@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">NYList</string>
+    <string name="action_settings">Settings</string>
+    
+    <string name="default_title">Event Title</string>
+    <string name="default_location">Location</string>
+    <string name="default_price">$10</string>
+    <string name="default_date">1/1/13</string>
+    
+    <string name="arrow_description">Arrow</string>
+    
+    <string name="description_default"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas interdum turpis vitae nunc fringilla dictum euismod erat vulputate. Pellentesque porttitor erat at sem gravida consectetur. Duis eros augue, iaculis in lobortis pellentesque, consequat vitae arcu. Sed quis nulla non erat pellentesque tempor vel quis velit. Phasellus et justo vel lacus varius euismod at id diam. Maecenas sit amet nisl at sapien facilisis lobortis vehicula eu ligula. Proin vel odio rhoncus lacus adipiscing placerat. Praesent interdum elit id quam tincidunt sit amet porttitor nibh ultricies. </string>
+
+    <string name="calendar_function">Add to Calendar</string>
+    <string name="directions_function">Get Directions</string>
+    <string name="tickets_function">Buy Tickets</string>
+    
+</resources>

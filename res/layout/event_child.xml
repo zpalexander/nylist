@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+    
+    <!-- Title Box -->
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+
+        android:background="@drawable/border"
+        android:padding="5dip"
+        android:text="@string/default_title"
+        android:textSize="30sp" />
+    
+    <!-- Description Box -->
+    <ScrollView
+        android:id="@+id/description"
+        android:layout_width="fill_parent"
+        android:layout_below="@id/title"
+        android:layout_height="150dp">
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="150dp"
+            android:background="@drawable/border"
+            android:padding="5dip"
+            android:text="@string/description_default" />
+
+   </ScrollView>
+
+ 
+        
+	<!-- Add To Calendar Button -->
+	<Button
+	    android:id="@+id/calendar_button"
+	    android:layout_width="96dp"
+	    android:layout_height="86dp"
+	    android:layout_alignParentRight="true"
+	    android:layout_below="@+id/description"
+	    android:text="@string/calendar_function" 
+	    android:background="@drawable/border"
+		android:padding="5dip"
+	 />
+
+	<!-- Date and time -->
+
+	<TextView
+	    android:id="@+id/child_date"
+	    android:layout_width="100dp"
+	    android:layout_height="wrap_content"
+	    android:layout_alignBottom="@+id/calendar_button"
+	    android:layout_alignParentLeft="true"
+	    android:layout_below="@+id/description"
+	    android:layout_toLeftOf="@+id/calendar_button"
+	    android:text="@string/default_date"
+	    android:background="@drawable/border"
+		android:padding="5dip"
+		android:gravity="center|left" />
+	
+	
+	<!-- Directions Button -->
+	<Button
+	    android:id="@+id/directions_button"
+	    android:layout_width="96dp"
+	    android:layout_height="86dp"
+	    android:layout_alignParentRight="true"
+	    android:layout_below="@+id/calendar_button"
+	    android:text="@string/directions_function" 
+	    android:background="@drawable/border"
+		android:padding="5dip"
+	 />
+
+	<!-- Directions -->
+
+	<TextView
+	    android:id="@+id/child_location"
+	    android:layout_width="100dp"
+	    android:layout_height="wrap_content"
+	    android:layout_alignBottom="@+id/directions_button"
+	    android:layout_alignParentLeft="true"
+	    android:layout_below="@+id/child_date"
+	    android:layout_toLeftOf="@+id/directions_button"
+	    android:text="@string/default_location"
+	    android:background="@drawable/border"
+		android:padding="5dip"
+		android:gravity="center|left" />
+	
+	
+		<!-- Buy Tickets Button -->
+	<Button
+	    android:id="@+id/tickets_button"
+	    android:layout_width="96dp"
+	    android:layout_height="86dp"
+	    android:layout_alignParentRight="true"
+	    android:layout_below="@+id/directions_button"
+	    android:text="@string/tickets_function" 
+	    android:background="@drawable/border"
+		android:padding="5dip"
+	 />
+
+	<!-- Price -->
+
+	<TextView
+	    android:id="@+id/child_price"
+	    android:layout_width="100dp"
+	    android:layout_height="wrap_content"
+	    android:layout_alignBottom="@+id/tickets_button"
+	    android:layout_alignParentLeft="true"
+	    android:layout_below="@+id/child_location"
+	    android:layout_toLeftOf="@+id/tickets_button"
+	    android:text="@string/default_price"
+	    android:background="@drawable/border"
+		android:padding="5dip"
+		android:gravity="center|left" />
+
+</RelativeLayout>
