@@ -7,4 +7,5 @@
     android:paddingRight="16dp"
     android:textColor="#fff"
     android:textSize="23sp"
-    android:background="?android:attr/activatedBackgroundIndicator"/>
+    android:background="?android:attr/activatedBackgroundIndicator"
+    android:onClick="changeFeed" />

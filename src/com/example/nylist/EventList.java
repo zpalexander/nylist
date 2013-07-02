@@ -5,10 +5,13 @@ package com.example.nylist;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -34,8 +37,31 @@ private String[] blogs = {"Favorites","Oh My Rockness","artcards","Brooklyn Vega
 		
 		
 		//Create the drawer
+		final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (ListView) findViewById(R.id.left_drawer);
 		mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, blogs));
+		
+		//Set the onClickListener for the drawer
+		mDrawerList.setOnItemClickListener(new OnItemClickListener()
+	    {
+	 
+	        @Override
+	        public void onItemClick(AdapterView<?> parent,
+	                View view, final int pos, long id)
+	        {
+	            drawer.setDrawerListener(
+	                new DrawerLayout.SimpleDrawerListener()
+	            {
+	                public void onDrawerClosed(View drawerView)
+	                {
+	                	//Code for dynamically generating list goes here!!!
+	                    super.onDrawerClosed(drawerView);
+	            		getActionBar().setTitle(blogs[pos]);
+	                }
+	            });
+	            drawer.closeDrawer(mDrawerList);
+	        }
+	    });
 		
 		
 		//Populate the list
@@ -72,6 +98,7 @@ private String[] blogs = {"Favorites","Oh My Rockness","artcards","Brooklyn Vega
 			intent.putExtra("values", values);
 			startActivity(intent);
         };
+        
 	
 
 	

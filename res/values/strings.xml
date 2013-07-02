@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    
     <string name="app_name">NYList</string>
     <string name="action_settings">Settings</string>
     
@@ -16,5 +17,7 @@
     <string name="calendar_function">Add to Calendar</string>
     <string name="directions_function">Get Directions</string>
     <string name="tickets_function">Buy Tickets</string>
+    
+    <string name="blog_thumb">Blog Thumbnail</string>
     
 </resources>
