@@ -28,6 +28,8 @@ public class EventChild extends Activity{
 		
 		TextView price=(TextView)findViewById(R.id.child_price);
 				price.setText(values[3]);
+				
+		getActionBar().setTitle((CharSequence) values[4]);
 		
 	}
 }

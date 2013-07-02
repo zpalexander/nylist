@@ -26,7 +26,8 @@ private ListView mDrawerList;
 private ListView listView;
 
 //The blogs included in the drawer
-private String[] blogs = {"Favorites","Oh My Rockness","artcards","Brooklyn Vegan","Village Voice"};	
+private String[] blogs = {"Favorites","Oh My Rockness","artcards","Brooklyn Vegan","Village Voice"};
+public String currentTitle = "NYList";
 	
 	
 	
@@ -56,7 +57,8 @@ private String[] blogs = {"Favorites","Oh My Rockness","artcards","Brooklyn Vega
 	                {
 	                	//Code for dynamically generating list goes here!!!
 	                    super.onDrawerClosed(drawerView);
-	            		getActionBar().setTitle(blogs[pos]);
+	                    currentTitle = blogs[pos];
+	            		getActionBar().setTitle(currentTitle);
 	                }
 	            });
 	            drawer.closeDrawer(mDrawerList);
@@ -86,7 +88,7 @@ private String[] blogs = {"Favorites","Oh My Rockness","artcards","Brooklyn Vega
 
 		public void openChild(View view) {
 			Intent intent = new Intent(EventList.this, EventChild.class);
-			String[] values = new String[4];
+			String[] values = new String[5];
 			TextView titleDisplay = (TextView) view.getRootView().findViewById(R.id.title);
 			TextView dateDisplay = (TextView) view.getRootView().findViewById(R.id.date);
 			TextView locationDisplay = (TextView) view.getRootView().findViewById(R.id.location);
@@ -95,6 +97,7 @@ private String[] blogs = {"Favorites","Oh My Rockness","artcards","Brooklyn Vega
 			values[1] = (String) dateDisplay.getText();
 			values[2] = (String) locationDisplay.getText();
 			values[3] = (String) priceDisplay.getText();
+			values[4] = currentTitle;
 			intent.putExtra("values", values);
 			startActivity(intent);
         };
