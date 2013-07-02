@@ -11,7 +11,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
 		android:textColor="#FFFFFF"
-        android:background="@drawable/border"
+        android:background="@drawable/button_border"
         android:padding="5dip"
         android:text="@string/default_title"
         android:textSize="30sp" />
@@ -21,14 +21,14 @@
         android:id="@+id/description"
         android:layout_width="fill_parent"
         android:layout_below="@id/title"
-        android:layout_height="150dp">
+        android:layout_height="150dp"
+        android:background="@drawable/button_border">
 
         <TextView
             android:layout_width="fill_parent"
-            android:layout_height="150dp"
-            android:background="@drawable/border"
+            android:layout_height="wrap_content"
             android:padding="5dip"
-            android:textColor="#D7D7D7"
+            android:textColor="#DADADA"
             android:text="@string/description_default" />
 
    </ScrollView>
@@ -43,7 +43,9 @@
 	    android:layout_alignParentRight="true"
 	    android:layout_below="@+id/description"
 	    android:text="@string/calendar_function" 
-	    android:background="@drawable/border"
+	    android:textColor="#10bcc9"
+	    android:textSize="18sp"
+	    android:background="@drawable/button_border"
 		android:padding="5dip"
 	 />
 
@@ -58,7 +60,9 @@
 	    android:layout_below="@+id/description"
 	    android:layout_toLeftOf="@+id/calendar_button"
 	    android:text="@string/default_date"
-	    android:background="@drawable/border"
+	    android:textColor="#10bcc9"
+	    android:textSize="20sp"
+	    android:background="@drawable/button_border"
 		android:padding="5dip"
 		android:gravity="center|left" />
 	
@@ -70,8 +74,10 @@
 	    android:layout_height="86dp"
 	    android:layout_alignParentRight="true"
 	    android:layout_below="@+id/calendar_button"
-	    android:text="@string/directions_function" 
-	    android:background="@drawable/border"
+	    android:text="@string/directions_function"
+	    android:textColor="#10bcc9" 
+	    android:textSize="18sp"
+	    android:background="@drawable/button_border"
 		android:padding="5dip"
 	 />
 
@@ -86,7 +92,9 @@
 	    android:layout_below="@+id/child_date"
 	    android:layout_toLeftOf="@+id/directions_button"
 	    android:text="@string/default_location"
-	    android:background="@drawable/border"
+	    android:textColor="#10bcc9"
+	    android:textSize="20sp"
+	    android:background="@drawable/button_border"
 		android:padding="5dip"
 		android:gravity="center|left" />
 	
@@ -98,8 +106,10 @@
 	    android:layout_height="86dp"
 	    android:layout_alignParentRight="true"
 	    android:layout_below="@+id/directions_button"
-	    android:text="@string/tickets_function" 
-	    android:background="@drawable/border"
+	    android:text="@string/tickets_function"
+	    android:textColor="#10bcc9"
+	    android:textSize="18sp"
+	    android:background="@drawable/button_border"
 		android:padding="5dip"
 	 />
 
@@ -114,7 +124,9 @@
 	    android:layout_below="@+id/child_location"
 	    android:layout_toLeftOf="@+id/tickets_button"
 	    android:text="@string/default_price"
-	    android:background="@drawable/border"
+	    android:textColor="#10bcc9"
+	    android:textSize="20sp"
+	    android:background="@drawable/button_border"
 		android:padding="5dip"
 		android:gravity="center|left" />
 

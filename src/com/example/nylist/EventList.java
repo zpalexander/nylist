@@ -23,7 +23,7 @@ private ListView mDrawerList;
 private ListView listView;
 
 //The blogs included in the drawer
-private String[] blogs = {"Oh My Rockness","artcards","Brooklyn Vegan","Village Voice"};	
+private String[] blogs = {"Favorites","Oh My Rockness","artcards","Brooklyn Vegan","Village Voice"};	
 	
 	
 	
