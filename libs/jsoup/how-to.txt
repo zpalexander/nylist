@@ -1,0 +1,14 @@
+
+you can use jsoup to parse any kind of web page. Here you can find the jsoup library and ffull source code.
+
+Here is an example: http://desicoding.blogspot.com/2011/03/how-to-parse-html-in-java-jsoup.html
+
+To install in Eclipse:
+
+    Right Click on project
+    BuildPath
+    Add External Archives
+    select the .jar file
+
+You can parse according to tag/parent/child very comfortably
+

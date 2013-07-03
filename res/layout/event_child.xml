@@ -9,12 +9,13 @@
     <TextView
         android:id="@+id/title"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
 		android:textColor="#FFFFFF"
         android:background="@drawable/button_border"
         android:padding="5dip"
         android:text="@string/default_title"
-        android:textSize="30sp" />
+        android:textSize="30sp"
+        android:gravity="center_vertical" />
     
     <!-- Description Box -->
     <ScrollView
