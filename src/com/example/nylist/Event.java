@@ -11,7 +11,6 @@ public class Event {
 	String _link;
 
 	public Event() {
-		
 	}
 	
 	//Constructor
