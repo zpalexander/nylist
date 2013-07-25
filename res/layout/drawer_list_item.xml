@@ -8,4 +8,4 @@
     android:textColor="#fff"
     android:textSize="23sp"
     android:background="?android:attr/activatedBackgroundIndicator"
-    android:onClick="changeFeed" />
+     />

@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#000000" >
+    android:background="#121212" >
     
     <!-- Title Box -->
 
@@ -12,7 +12,7 @@
         android:layout_height="80dp"
 		android:textColor="#FFFFFF"
         android:background="@drawable/button_border"
-        android:padding="5dip"
+        android:padding="5dp"
         android:text="@string/default_title"
         android:textSize="30sp"
         android:gravity="center_vertical" />
@@ -28,8 +28,7 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:padding="5dip"
-            android:textColor="#DADADA"
+            android:textColor="#B5B5B5"
             android:text="@string/description_default" />
 
    </ScrollView>
@@ -44,7 +43,7 @@
 	    android:layout_alignParentRight="true"
 	    android:layout_below="@+id/description"
 	    android:text="@string/calendar_function" 
-	    android:textColor="#10bcc9"
+	    android:textColor="#006AC6"
 	    android:textSize="18sp"
 	    android:background="@drawable/button_border"
 		android:padding="5dip"
@@ -61,10 +60,11 @@
 	    android:layout_below="@+id/description"
 	    android:layout_toLeftOf="@+id/calendar_button"
 	    android:text="@string/default_date"
-	    android:textColor="#10bcc9"
+	    android:textColor="#B5B5B5"
 	    android:textSize="20sp"
 	    android:background="@drawable/button_border"
 		android:padding="5dip"
+        android:paddingLeft="10dp"
 		android:gravity="center|left" />
 	
 	
@@ -76,7 +76,7 @@
 	    android:layout_alignParentRight="true"
 	    android:layout_below="@+id/calendar_button"
 	    android:text="@string/directions_function"
-	    android:textColor="#10bcc9" 
+	    android:textColor="#006AC6" 
 	    android:textSize="18sp"
 	    android:background="@drawable/button_border"
 		android:padding="5dip"
@@ -93,10 +93,11 @@
 	    android:layout_below="@+id/child_date"
 	    android:layout_toLeftOf="@+id/directions_button"
 	    android:text="@string/default_location"
-	    android:textColor="#10bcc9"
+	    android:textColor="#B5B5B5"
 	    android:textSize="20sp"
 	    android:background="@drawable/button_border"
 		android:padding="5dip"
+        android:paddingLeft="10dp"
 		android:gravity="center|left" />
 	
 	
@@ -108,7 +109,7 @@
 	    android:layout_alignParentRight="true"
 	    android:layout_below="@+id/directions_button"
 	    android:text="@string/tickets_function"
-	    android:textColor="#10bcc9"
+	    android:textColor="#006AC6"
 	    android:textSize="18sp"
 	    android:background="@drawable/button_border"
 		android:padding="5dip"
@@ -125,10 +126,11 @@
 	    android:layout_below="@+id/child_location"
 	    android:layout_toLeftOf="@+id/tickets_button"
 	    android:text="@string/default_price"
-	    android:textColor="#10bcc9"
+	    android:textColor="#B5B5B5"
 	    android:textSize="20sp"
 	    android:background="@drawable/button_border"
 		android:padding="5dip"
+        android:paddingLeft="10dp"
 		android:gravity="center|left" />
 
 </RelativeLayout>
