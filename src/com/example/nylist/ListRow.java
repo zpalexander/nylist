@@ -8,18 +8,20 @@ public class ListRow extends View {
 	public String date;
 	public String price;
 	public String location;
+	public String ticketLink;
 	public int index;
 	
 	public ListRow() {
 		super(null);
 	}
 	
-	public ListRow(Context context, String title, String date, String price, String location, int index) {
+	public ListRow(Context context, String title, String date, String price, String location, String ticketLink, int index) {
 		super(context);
 		this.title = title;
 		this.date = date;
 		this.price = price;
 		this.location = location;
+		this.ticketLink = ticketLink;
 		this.index = index;
 		
 	}
@@ -45,6 +47,10 @@ public class ListRow extends View {
 		return index;
 	}
 	
+	public String getTicketLink() {
+	    	return ticketLink;
+	}
+	
 	
 	//Setter methods
 	public void setTitle(String title) {
@@ -65,6 +71,10 @@ public class ListRow extends View {
 	
 	public void setIndex(int index) {
 		this.index = index;
+	}
+	
+	public void setTicketLink(String link) {
+	    	this.ticketLink = link;
 	}
 	
 }

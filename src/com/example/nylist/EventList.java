@@ -7,6 +7,7 @@ import java.io.IOException;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
@@ -31,7 +32,10 @@ public class EventList extends Activity {
 
     //The blogs included in the drawer
     private String[] blogs = {"Favorites","Oh My Rockness","artcards","Brooklyn Vegan","Village Voice"};
-    public String currentTitle = "NYList";
+    public String currentBlog = "NYList";
+    
+    //The array holding the current list's objects
+    public ListRow[] eventArray;
 	
 	
 	
@@ -39,7 +43,11 @@ public class EventList extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
 	setContentView(R.layout.activity_event_list);
-		
+	//Set font in action bar
+	Typeface actionBarType = Typeface.createFromAsset(this.getAssets(), "fonts/Raleway-Medium.otf");
+	final int titleId = Resources.getSystem().getIdentifier("action_bar_title", "id", "android");
+	TextView title = (TextView) getWindow().findViewById(titleId);
+	title.setTypeface(actionBarType);
 		
 	//Create the drawer
 	final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -60,8 +68,8 @@ public class EventList extends Activity {
 	                {
 	                	//Code for dynamically generating list goes here!!!
 	                    super.onDrawerClosed(drawerView);
-	                    currentTitle = blogs[pos];
-	            		getActionBar().setTitle(currentTitle);
+	                    currentBlog = blogs[pos];
+	            		getActionBar().setTitle(currentBlog);
 	                }
 	            });
 	            drawer.closeDrawer(mDrawerList);
@@ -80,6 +88,7 @@ public class EventList extends Activity {
     	    ListRowAdapter adapter = new ListRowAdapter(this, R.layout.list_row, listrowData);
 	    listView = (ListView)findViewById(R.id.list);
 	    listView.setAdapter(adapter);
+	    eventArray = listrowData;
     	}
     	                                          
 	
@@ -89,7 +98,7 @@ public class EventList extends Activity {
 	    ListRow[] listrow_data = new ListRow[eventCount];
 	    ListRow temp;
 	    for (int i=0;i<eventCount;i++) {
-		temp = new ListRow(this,"Event Title","1/1/13","$7","285 Kent",i);
+		temp = new ListRow(this,"Event Title","1/1/13","$7","285 Kent","www.ohmyrockness.com", i);
 		listrow_data[i] = temp;	
 	    }
 		
@@ -102,16 +111,17 @@ public class EventList extends Activity {
 
 	public void openChild(View view) {
 	    Intent intent = new Intent(EventList.this, EventChild.class);
-	    String[] values = new String[5];
-	    TextView titleDisplay = (TextView) view.getRootView().findViewById(R.id.title);
-	    TextView dateDisplay = (TextView) view.getRootView().findViewById(R.id.date);
-	    TextView locationDisplay = (TextView) view.getRootView().findViewById(R.id.location);
-	    TextView priceDisplay = (TextView) view.getRootView().findViewById(R.id.price);
-	    values[0] = (String) titleDisplay.getText();
-	    values[1] = (String) dateDisplay.getText();
-	    values[2] = (String) locationDisplay.getText();
-	    values[3] = (String) priceDisplay.getText();
-	    values[4] = currentTitle;
+	    String[] values = new String[6];
+	    TextView eventIndexTV = (TextView) view.findViewById(R.id.indexView);
+	    String eventIndexString = (String) eventIndexTV.getText();
+	    int eventIndex = Integer.parseInt(eventIndexString);
+	    ListRow eventRow = eventArray[eventIndex];
+	    values[0] = eventRow.getTitle();
+	    values[1] = eventRow.getDate();
+	    values[2] = eventRow.getLocation();
+	    values[3] = eventRow.getPrice();
+	    values[4] = currentBlog;
+	    values[5] = eventRow.getTicketLink();
 	    intent.putExtra("values", values);
 	    startActivity(intent);
         };

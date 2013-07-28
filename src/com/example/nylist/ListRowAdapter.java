@@ -33,8 +33,10 @@ public class ListRowAdapter extends ArrayAdapter<ListRow> {
             holder = new ListRowHolder();
             holder.title = (TextView)row.findViewById(R.id.title);
             holder.date = (TextView)row.findViewById(R.id.date);
-            holder.price = (TextView)row.findViewById(R.id.price);
-            holder.location = (TextView)row.findViewById(R.id.location);
+            //holder.price = (TextView)row.findViewById(R.id.price);
+            //holder.location = (TextView)row.findViewById(R.id.location);
+            //holder.ticketLink = (TextView)row.findViewById(R.id.ticketLink);
+            holder.index = (TextView)row.findViewById(R.id.indexView);
            
             row.setTag(holder);
         }
@@ -45,8 +47,10 @@ public class ListRowAdapter extends ArrayAdapter<ListRow> {
         ListRow listrow = data[position];
         holder.title.setText(listrow.title);
         holder.date.setText(listrow.date);
-        holder.price.setText(listrow.price);
-        holder.location.setText(listrow.location);
+        //holder.price.setText(listrow.price);
+        //holder.location.setText(listrow.location);
+        //holder.ticketLink.setText(listrow.ticketLink);
+        holder.index.setText(Integer.toString(listrow.index));
         
         Typeface titleType = Typeface.createFromAsset(context.getAssets(), "fonts/Raleway-Light.otf");
         Typeface dateType = Typeface.createFromAsset(context.getAssets(), "fonts/helveticaneue-webfont.ttf");
@@ -62,8 +66,10 @@ public class ListRowAdapter extends ArrayAdapter<ListRow> {
     {
         TextView title;
         TextView date;
-        TextView price;
-        TextView location;
+        //TextView price;
+        //TextView location;
+        //TextView ticketLink;
+        TextView index;
     }
     
 }

@@ -22,11 +22,11 @@ import org.jsoup.select.Elements;
 
 public class OMRParser extends AsyncTask<Void, Void, String[][]>{
     private static String TAG_TITLE = ".summary";
-    private static String TAG_LINK = "link";
+    private static String TAG_LINK = ".ticketLink";
     private static String TAG_DESRIPTION = "description";
-    private static String TAG_LOCATION= ".fn org";
-    private static String TAG_DATE= "item";
-    private static String TAG_PRICE = ".price";
+    private static String TAG_LOCATION= ".fn";
+    private static String TAG_DATE= ".date";
+    private static String TAG_PRICE = ".tickets";
     private static String FEED_URL = "http://www.ohmyrockness.com/showlist.cfm?by=date";
     Context context;
     Activity activity;
@@ -58,11 +58,11 @@ public class OMRParser extends AsyncTask<Void, Void, String[][]>{
     
     protected void onPostExecute(String[][] result) {
 	super.onPostExecute(result);
-	int eventCount = result[0].length;
+	int eventCount = result.length;
 	ListRow[] listrow_data = new ListRow[eventCount];
 	ListRow temp;
 	for (int i=0; i<eventCount; i++) {
-	    temp = new ListRow(context, result[i][0], "1/1/13", "$7", "285 Kent", i);
+	    temp = new ListRow(context, result[i][0], result[i][1], result[i][2], result[i][3], result[i][4], i);
 	    listrow_data[i] = temp;
 	}
 	((EventList) activity).setList(listrow_data);    
@@ -78,34 +78,61 @@ public class OMRParser extends AsyncTask<Void, Void, String[][]>{
 	    doc = Jsoup.connect(FEED_URL).timeout(0).get();
 	    
 	    Elements titles = doc.select(TAG_TITLE);
-	    Elements locations = doc.select(TAG_LOCATION);
+	    Elements dates = doc.select(TAG_DATE);
 	    Elements prices = doc.select(TAG_PRICE);
+	    Elements locations = doc.select(TAG_LOCATION);
+	    Elements tickets = doc.select(TAG_LINK);
 	    
 	    //Add titles to 2d array
 	    int i = 0;
-	    int j = 0;
 	    for (Element title : titles) {
-		values[i][j] = title.text();
+		values[i][0] = title.text();
 		i++;
 	    }
 	    
-	    /*
-	    //Add locations to 2d array
+	    //Add dates to 2d array
 	    i = 0;
-	    j = 1;
-	    for (Element location : locations) {
-		values[i][j] = location.text();
+	    for (Element date : dates) {
+		String tempDate = date.text();
+		String delim = "[ ]";
+		String[] tokens = tempDate.split(delim);
+		values[i][1] = tokens[1];
 		i++;
-	    }
+	    } 
 	   
 	    //Add prices to 2d array
 	    i = 0;
-	    j = 2;
-	    for (Element price: prices) {
-		values[i][j] = price.text();
+	    for (Element price : prices) {
+		String temp = price.text();
+		if (temp.toLowerCase().contains("FREE SHOW".toLowerCase())) {
+		    values[i][2] = "Free Show";
+		}
+		else {
+		    temp = temp.replaceAll("\\D+","");
+		    values[i][2] = ("$" + temp);
+		}
 		i++;
 	    }
-	    */
+	    
+	    //Add locations to 2d array
+	    i = 0;
+	    for (Element location : locations) {
+		values[i][3] = location.text();
+		i++;
+	    }
+	    
+	   //Add links to 2d array
+	    i = 0;
+	    for (Element ticket : tickets) {
+		while (values[i][2] == "Free Show") {
+		    i++;
+		}
+		
+		values[i][4] = ticket.attr("href");
+		i++;
+	    }
+	   
+
 
 	}
 	catch (IOException e) {
