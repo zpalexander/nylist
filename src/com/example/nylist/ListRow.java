@@ -6,6 +6,7 @@ import android.view.View;
 public class ListRow extends View {
 	public String title;
 	public String date;
+	public String time;
 	public String price;
 	public String location;
 	public String ticketLink;
@@ -15,10 +16,11 @@ public class ListRow extends View {
 		super(null);
 	}
 	
-	public ListRow(Context context, String title, String date, String price, String location, String ticketLink, int index) {
+	public ListRow(Context context, String title, String date, String time, String price, String location, String ticketLink, int index) {
 		super(context);
 		this.title = title;
 		this.date = date;
+		this.time = time;
 		this.price = price;
 		this.location = location;
 		this.ticketLink = ticketLink;
@@ -33,6 +35,10 @@ public class ListRow extends View {
 	
 	public String getDate() {
 		return date;
+	}
+	
+	public String getTime() {
+	    	return time;
 	}
 	
 	public String getPrice() {
@@ -59,6 +65,10 @@ public class ListRow extends View {
 	
 	public void setDate(String date) {
 		this.date = date;
+	}
+	
+	public void setTime(String time) {
+	    	this.time = time;
 	}
 	
 	public void setPrice(String price) {

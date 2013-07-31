@@ -1,19 +1,10 @@
 package com.example.nylist;
 
 import java.io.IOException;
-import java.io.StringReader;
-import java.io.UnsupportedEncodingException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-
 import android.app.Activity;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
-import android.view.View;
-import android.widget.ListView;
+import android.widget.Toast;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -23,7 +14,6 @@ import org.jsoup.select.Elements;
 public class OMRParser extends AsyncTask<Void, Void, String[][]>{
     private static String TAG_TITLE = ".summary";
     private static String TAG_LINK = ".ticketLink";
-    private static String TAG_DESRIPTION = "description";
     private static String TAG_LOCATION= ".fn";
     private static String TAG_DATE= ".date";
     private static String TAG_PRICE = ".tickets";
@@ -41,7 +31,7 @@ public class OMRParser extends AsyncTask<Void, Void, String[][]>{
     @Override
     protected void onPreExecute() {
        super.onPreExecute();
-       //Display progress bar
+       Toast.makeText(context, "Fetching...", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -62,7 +52,8 @@ public class OMRParser extends AsyncTask<Void, Void, String[][]>{
 	ListRow[] listrow_data = new ListRow[eventCount];
 	ListRow temp;
 	for (int i=0; i<eventCount; i++) {
-	    temp = new ListRow(context, result[i][0], result[i][1], result[i][2], result[i][3], result[i][4], i);
+	    temp = new ListRow(context, result[i][0], result[i][1], result[i][2], 
+		    result[i][3], result[i][4], result[i][5], i);
 	    listrow_data[i] = temp;
 	}
 	((EventList) activity).setList(listrow_data);    
@@ -90,13 +81,16 @@ public class OMRParser extends AsyncTask<Void, Void, String[][]>{
 		i++;
 	    }
 	    
-	    //Add dates to 2d array
+	    //Add dates and times to 2d array
 	    i = 0;
 	    for (Element date : dates) {
 		String tempDate = date.text();
 		String delim = "[ ]";
 		String[] tokens = tempDate.split(delim);
 		values[i][1] = tokens[1];
+		//Set time
+		String time = (tokens[2] + tokens[3]);
+		values[i][2] = time;
 		i++;
 	    } 
 	   
@@ -105,11 +99,11 @@ public class OMRParser extends AsyncTask<Void, Void, String[][]>{
 	    for (Element price : prices) {
 		String temp = price.text();
 		if (temp.toLowerCase().contains("FREE SHOW".toLowerCase())) {
-		    values[i][2] = "Free Show";
+		    values[i][3] = "Free Show";
 		}
 		else {
 		    temp = temp.replaceAll("\\D+","");
-		    values[i][2] = ("$" + temp);
+		    values[i][3] = ("$" + temp);
 		}
 		i++;
 	    }
@@ -117,7 +111,7 @@ public class OMRParser extends AsyncTask<Void, Void, String[][]>{
 	    //Add locations to 2d array
 	    i = 0;
 	    for (Element location : locations) {
-		values[i][3] = location.text();
+		values[i][4] = location.text();
 		i++;
 	    }
 	    
@@ -128,7 +122,7 @@ public class OMRParser extends AsyncTask<Void, Void, String[][]>{
 		    i++;
 		}
 		
-		values[i][4] = ticket.attr("href");
+		values[i][5] = ticket.attr("href");
 		i++;
 	    }
 	   

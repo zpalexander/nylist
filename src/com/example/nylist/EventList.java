@@ -4,6 +4,7 @@ package com.example.nylist;
 
 import java.io.IOException;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.content.res.Resources;
 import android.graphics.Typeface;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnKeyListener;
@@ -53,6 +55,7 @@ public class EventList extends Activity {
 	final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 	mDrawerList = (ListView) findViewById(R.id.left_drawer);
 	mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, blogs));
+	
 		
 	//Set the onClickListener for the drawer
 	mDrawerList.setOnItemClickListener(new OnItemClickListener()
@@ -61,23 +64,31 @@ public class EventList extends Activity {
 	        public void onItemClick(AdapterView<?> parent,
 	                View view, final int pos, long id)
 	        {
+	            //This is where the switching will occur to decide which feed gets pulled 
+	            switch (pos) {
+	            	case 1: new OMRParser(EventList.this).execute(); break;
+	            	
+	            	case 2: new ArtCardsParser(EventList.this).execute(); break;
+	            	
+	            	default: break;
+	            }
+	            currentBlog = blogs[pos];
+	            getActionBar().setTitle(currentBlog);
 	            drawer.setDrawerListener(
-	                new DrawerLayout.SimpleDrawerListener()
-	            {
-	                public void onDrawerClosed(View drawerView)
-	                {
-	                	//Code for dynamically generating list goes here!!!
+	        	    new DrawerLayout.SimpleDrawerListener()
+	        	    {
+	        		public void onDrawerClosed(View drawerView)
+	        		{
 	                    super.onDrawerClosed(drawerView);
-	                    currentBlog = blogs[pos];
-	            		getActionBar().setTitle(currentBlog);
-	                }
+	        		}
 	            });
 	            drawer.closeDrawer(mDrawerList);
 	        }
 	    });
+	//Start app with drawer open
+	drawer.openDrawer(mDrawerList);
 	
-	//Test 
-	new OMRParser(this).execute();
+	
 
 	}
 
@@ -98,7 +109,7 @@ public class EventList extends Activity {
 	    ListRow[] listrow_data = new ListRow[eventCount];
 	    ListRow temp;
 	    for (int i=0;i<eventCount;i++) {
-		temp = new ListRow(this,"Event Title","1/1/13","$7","285 Kent","www.ohmyrockness.com", i);
+		temp = new ListRow(this,"Event Title","1/1/13", "8:00pm","$7","285 Kent","www.ohmyrockness.com", i);
 		listrow_data[i] = temp;	
 	    }
 		
@@ -111,17 +122,18 @@ public class EventList extends Activity {
 
 	public void openChild(View view) {
 	    Intent intent = new Intent(EventList.this, EventChild.class);
-	    String[] values = new String[6];
+	    String[] values = new String[7];
 	    TextView eventIndexTV = (TextView) view.findViewById(R.id.indexView);
 	    String eventIndexString = (String) eventIndexTV.getText();
 	    int eventIndex = Integer.parseInt(eventIndexString);
 	    ListRow eventRow = eventArray[eventIndex];
 	    values[0] = eventRow.getTitle();
 	    values[1] = eventRow.getDate();
-	    values[2] = eventRow.getLocation();
-	    values[3] = eventRow.getPrice();
-	    values[4] = currentBlog;
-	    values[5] = eventRow.getTicketLink();
+	    values[2] = eventRow.getTime();
+	    values[3] = eventRow.getLocation();
+	    values[4] = eventRow.getPrice();
+	    values[5] = currentBlog;
+	    values[6] = eventRow.getTicketLink();
 	    intent.putExtra("values", values);
 	    startActivity(intent);
         };
@@ -136,6 +148,17 @@ public class EventList extends Activity {
 		getMenuInflater().inflate(R.menu.event_list, menu);
 		return true;
 	}
+	
+	public boolean viewInBrowser(MenuItem item) {
+	    goToUrl("www.ohmyrockness.com");
+	    return true;
+	}
+	
+	private void goToUrl (String url) {
+	        Uri uriUrl = Uri.parse(url);
+	        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
+	        startActivity(launchBrowser);
+	    }
 
 
 	

@@ -47,6 +47,7 @@
 	    android:textSize="18sp"
 	    android:background="@drawable/button_border"
 		android:padding="5dip"
+        android:onClick="addToCalendar"
 	 />
 
 	<!-- Date and time -->
@@ -80,6 +81,7 @@
 	    android:textSize="18sp"
 	    android:background="@drawable/button_border"
 		android:padding="5dip"
+        android:onClick="viewLocation"
 	 />
 
 	<!-- Directions -->

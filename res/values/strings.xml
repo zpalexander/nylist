@@ -3,7 +3,6 @@
 
     
     <string name="app_name">NYList</string>
-    <string name="action_settings">Settings</string>
     
     <string name="default_title">Event Title</string>
     <string name="default_location">Location</string>
@@ -19,5 +18,8 @@
     <string name="tickets_function">Buy Tickets</string>
     
     <string name="blog_thumb">Blog Thumbnail</string>
+    
+    <string name="view_website">Show in Browser</string>
+    <string name="refresh">Refresh List</string>
     
 </resources>
