@@ -33,7 +33,7 @@ public class EventList extends Activity {
     private ListView listView;
 
     //The blogs included in the drawer
-    private String[] blogs = {"Favorites","Oh My Rockness","artcards","Brooklyn Vegan","Village Voice"};
+    private String[] blogs = {"Favorites","Oh My Rockness","artcards","Brooklyn Vegan","My Social List", "Village Voice"};
     public String currentBlog = "NYList";
     
     //The array holding the current list's objects
@@ -70,6 +70,10 @@ public class EventList extends Activity {
 	            	
 	            	case 2: new ArtCardsParser(EventList.this).execute(); break;
 	            	
+	            	case 3: new BVParser(EventList.this).execute(); break;
+	            	
+	            	case 4: new MSLParser(EventList.this).execute(); break;
+	            	
 	            	default: break;
 	            }
 	            currentBlog = blogs[pos];
@@ -85,11 +89,8 @@ public class EventList extends Activity {
 	            drawer.closeDrawer(mDrawerList);
 	        }
 	    });
-	//Start app with drawer open
+		//Start app with drawer open
 	drawer.openDrawer(mDrawerList);
-	
-	
-
 	}
 
     
