@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
@@ -25,6 +26,7 @@ public class MSLParser extends AsyncTask<Void, Void, String[][]>{
     private static String FEED_URL = "http://www.mysocialist.com/concerts";
     Context context;
     Activity activity;
+    ProgressDialog dialog;
 
     public MSLParser(Activity context) {
 	this.context = context.getApplicationContext();
@@ -36,7 +38,7 @@ public class MSLParser extends AsyncTask<Void, Void, String[][]>{
     @Override
     protected void onPreExecute() {
        super.onPreExecute();
-       Toast.makeText(context, "Fetching...", Toast.LENGTH_LONG).show();
+       dialog = ProgressDialog.show(activity, "","Loading", true);
     }
 
     @Override
@@ -62,6 +64,7 @@ public class MSLParser extends AsyncTask<Void, Void, String[][]>{
 	    listrow_data[i] = temp;
 	}
 	((EventList) activity).setList(listrow_data);    
+	dialog.dismiss();
     }
 
     
@@ -122,7 +125,11 @@ public class MSLParser extends AsyncTask<Void, Void, String[][]>{
 		values[i][4] = event.select(TAG_LOCATION).text();
     
 		//Set ticket urls
-		String ticketURL = event.select(TAG_EVENT_URL).attr("href");
+		Elements ticketElements = event.select(TAG_EVENT_URL);
+		String ticketURL = null;
+		for (Element ticketElement : ticketElements) {
+		    ticketURL = ticketElement.attr("abs:href");
+		}
 		values[i][5] = ticketURL;
 		i++;
 	    } //End of event loop

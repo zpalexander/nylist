@@ -2,6 +2,7 @@ package com.example.nylist;
 
 import java.io.IOException;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
@@ -20,6 +21,7 @@ public class OMRParser extends AsyncTask<Void, Void, String[][]>{
     private static String FEED_URL = "http://www.ohmyrockness.com/showlist.cfm?by=date";
     Context context;
     Activity activity;
+    ProgressDialog dialog;
 
     public OMRParser(Activity context) {
 	this.context = context.getApplicationContext();
@@ -31,7 +33,7 @@ public class OMRParser extends AsyncTask<Void, Void, String[][]>{
     @Override
     protected void onPreExecute() {
        super.onPreExecute();
-       Toast.makeText(context, "Fetching...", Toast.LENGTH_LONG).show();
+       dialog = ProgressDialog.show(activity, "", "Loading", true);
     }
 
     @Override
@@ -57,6 +59,7 @@ public class OMRParser extends AsyncTask<Void, Void, String[][]>{
 	    listrow_data[i] = temp;
 	}
 	((EventList) activity).setList(listrow_data);    
+	dialog.dismiss();
     }
 
     

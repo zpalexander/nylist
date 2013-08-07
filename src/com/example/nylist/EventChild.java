@@ -87,37 +87,39 @@ public class EventChild extends Activity{
 	
 	@SuppressLint("NewApi")
 	public void addToCalendar(View view) {
-	    //Parse date 
-	    String dateDelim = "/";
-	    String[] dateTokens = dateString.split(dateDelim);
-	    int month = Integer.parseInt(dateTokens[0]);
-	    int day = Integer.parseInt(dateTokens[1]);
-	    
-	    //Parse time
-	    String timeDelim = ":";
-	    String[] timeTokens = timeString.split(timeDelim);
-	    int startHour = Integer.parseInt(timeTokens[0]);
-	    char[] minuteCharArray = timeTokens[1].toCharArray();
-	    String minutes = new StringBuilder().append(minuteCharArray[0]).append(minuteCharArray[1]).toString();
-	    int startMinute = Integer.parseInt(minutes);
-
-	    Calendar beginTime = Calendar.getInstance();
-	    beginTime.set(2013, (month-1), day, startHour, startMinute);
-	    Calendar endTime = Calendar.getInstance();
-	    endTime.set(2013, (month-1), day, (startHour+2), startMinute);
-	    
-	    Intent calendarIntent = new Intent(Intent.ACTION_EDIT);
-	    calendarIntent.setType("vnd.android.cursor.item/event");
-	    calendarIntent.putExtra(Events.TITLE, titleString);
-	    calendarIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME,
-	                        beginTime.getTimeInMillis());
-	    calendarIntent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME,
-	                        endTime.getTimeInMillis());
-	    calendarIntent.putExtra(Events.ALL_DAY, false);// periodicity
-	    //calendarIntent.putExtra(Events.DESCRIPTION,strDescription));
-	    calendarIntent.putExtra(Events.EVENT_LOCATION, locationString);
-
-	    startActivity(calendarIntent);
+	    if ((dateString != null) && (timeString != null)) {
+        	    //Parse date 
+        	    String dateDelim = "/";
+        	    String[] dateTokens = dateString.split(dateDelim);
+        	    int month = Integer.parseInt(dateTokens[0]);
+        	    int day = Integer.parseInt(dateTokens[1]);
+        	    
+        	    //Parse time
+        	    String timeDelim = ":";
+        	    String[] timeTokens = timeString.split(timeDelim);
+        	    int startHour = Integer.parseInt(timeTokens[0]);
+        	    char[] minuteCharArray = timeTokens[1].toCharArray();
+        	    String minutes = new StringBuilder().append(minuteCharArray[0]).append(minuteCharArray[1]).toString();
+        	    int startMinute = Integer.parseInt(minutes);
+        
+        	    Calendar beginTime = Calendar.getInstance();
+        	    beginTime.set(2013, (month-1), day, startHour, startMinute);
+        	    Calendar endTime = Calendar.getInstance();
+        	    endTime.set(2013, (month-1), day, (startHour+2), startMinute);
+        	    
+        	    Intent calendarIntent = new Intent(Intent.ACTION_EDIT);
+        	    calendarIntent.setType("vnd.android.cursor.item/event");
+        	    calendarIntent.putExtra(Events.TITLE, titleString);
+        	    calendarIntent.putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME,
+        	                        beginTime.getTimeInMillis());
+        	    calendarIntent.putExtra(CalendarContract.EXTRA_EVENT_END_TIME,
+        	                        endTime.getTimeInMillis());
+        	    calendarIntent.putExtra(Events.ALL_DAY, false);// periodicity
+        	    //calendarIntent.putExtra(Events.DESCRIPTION,strDescription));
+        	    calendarIntent.putExtra(Events.EVENT_LOCATION, locationString);
+        
+        	    startActivity(calendarIntent);
+	    }
 	}
 	
 	
@@ -140,8 +142,10 @@ public class EventChild extends Activity{
 	}
 	
 	private void goToUrl (String url) {
+	    if (url != null) {
 	        Uri uriUrl = Uri.parse(url);
 	        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
 	        startActivity(launchBrowser);
 	    }
+	}
 }

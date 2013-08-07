@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
@@ -24,6 +25,7 @@ public class ArtCardsParser extends AsyncTask<Void, Void, String[][]>{
     String FEED_URL = "http://artcards.cc/newyork/";
     Context context;
     Activity activity;
+    ProgressDialog dialog;
 
     //Constructor
     public ArtCardsParser(Activity context) {
@@ -36,7 +38,7 @@ public class ArtCardsParser extends AsyncTask<Void, Void, String[][]>{
     @Override
     protected void onPreExecute() {
        super.onPreExecute();
-       Toast.makeText(context, "Fetching...", Toast.LENGTH_LONG).show();
+       dialog = ProgressDialog.show(activity, "", "Loading", true);
     }
     
     @Override
@@ -63,6 +65,7 @@ public class ArtCardsParser extends AsyncTask<Void, Void, String[][]>{
 	    listrow_data[i] = temp;
 	}
 	((EventList) activity).setList(listrow_data);
+	dialog.dismiss();
     }
     
     

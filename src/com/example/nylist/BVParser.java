@@ -2,6 +2,7 @@ package com.example.nylist;
 
 import java.io.IOException;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -21,6 +22,7 @@ public class BVParser extends AsyncTask<Void, Void, String[][]> {
     static String FEED_URL = "http://nyc-shows.brooklynvegan.com/";
     Context context;
     Activity activity;
+    ProgressDialog dialog;
 
     public BVParser(Activity context) {
 	this.context = context.getApplicationContext();
@@ -32,7 +34,7 @@ public class BVParser extends AsyncTask<Void, Void, String[][]> {
     @Override
     protected void onPreExecute() {
        super.onPreExecute();
-       Toast.makeText(context, "Fetching...", Toast.LENGTH_LONG).show();
+       dialog = ProgressDialog.show(activity, "", "Loading",true);
     }
 
     @Override
@@ -64,6 +66,7 @@ public class BVParser extends AsyncTask<Void, Void, String[][]> {
 	    }
 	}
 	((EventList) activity).setList(listrow_data);    
+	dialog.dismiss();
     }
 
 
