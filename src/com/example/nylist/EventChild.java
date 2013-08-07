@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.provider.CalendarContract;
 import android.provider.CalendarContract.Events;
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Typeface;
@@ -31,6 +32,11 @@ public class EventChild extends Activity{
     protected void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
 	setContentView(R.layout.event_child);
+	
+	ActionBar actionBar = getActionBar();
+	actionBar.setDisplayHomeAsUpEnabled(true);
+	actionBar.setDisplayShowHomeEnabled(false);
+	actionBar.setDisplayUseLogoEnabled(false);
 		
 	Typeface titleType = Typeface.createFromAsset(this.getAssets(), "fonts/Raleway-Light.otf");
 	Typeface textType = Typeface.createFromAsset(this.getAssets(), "fonts/helveticaneue-webfont.ttf");
@@ -147,5 +153,12 @@ public class EventChild extends Activity{
 	        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
 	        startActivity(launchBrowser);
 	    }
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem menuItem)
+	{       
+	    onBackPressed();
+	    return true;
 	}
 }

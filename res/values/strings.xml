@@ -10,6 +10,8 @@
     <string name="default_date">1/1/13</string>
     
     <string name="arrow_description">Arrow</string>
+    <string name="drawer_open">Drawer Open</string>
+    <string name="drawer_close">Drawer Closed</string>
     
     <string name="description_default"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas interdum turpis vitae nunc fringilla dictum euismod erat vulputate. Pellentesque porttitor erat at sem gravida consectetur. Duis eros augue, iaculis in lobortis pellentesque, consequat vitae arcu. Sed quis nulla non erat pellentesque tempor vel quis velit. Phasellus et justo vel lacus varius euismod at id diam. Maecenas sit amet nisl at sapien facilisis lobortis vehicula eu ligula. Proin vel odio rhoncus lacus adipiscing placerat. Praesent interdum elit id quam tincidunt sit amet porttitor nibh ultricies. </string>
 

@@ -2,32 +2,34 @@ package com.example.nylist;
 
 
 
-import java.io.IOException;
-
 import android.net.Uri;
 import android.os.Bundle;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Typeface;
+import android.graphics.drawable.ColorDrawable;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnKeyListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import org.jsoup.*;
+
 
 
 public class EventList extends Activity {
 
     //The view for the drawer
-    private ListView mDrawerList;
+    private ListView drawerList;
+    
+    DrawerLayout drawer;
 
     //The view for the list
     private ListView listView;
@@ -39,61 +41,95 @@ public class EventList extends Activity {
     //The array holding the current list's objects
     public ListRow[] eventArray;
 	
+    ActionBar actionBar;
+    ActionBarDrawerToggle drawerToggle;
 	
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 	super.onCreate(savedInstanceState);
 	setContentView(R.layout.activity_event_list);
-	//Set font in action bar
-	Typeface actionBarType = Typeface.createFromAsset(this.getAssets(), "fonts/Raleway-Medium.otf");
-	final int titleId = Resources.getSystem().getIdentifier("action_bar_title", "id", "android");
-	TextView title = (TextView) getWindow().findViewById(titleId);
-	title.setTypeface(actionBarType);
-		
-	//Create the drawer
-	final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-	mDrawerList = (ListView) findViewById(R.id.left_drawer);
-	mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, blogs));
-	
-		
-	//Set the onClickListener for the drawer
-	mDrawerList.setOnItemClickListener(new OnItemClickListener()
-	    {
-	        @Override
-	        public void onItemClick(AdapterView<?> parent,
-	                View view, final int pos, long id)
-	        {
-	            //This is where the switching will occur to decide which feed gets pulled 
-	            switch (pos) {
-	            	case 1: new OMRParser(EventList.this).execute(); break;
-	            	
-	            	case 2: new ArtCardsParser(EventList.this).execute(); break;
-	            	
-	            	case 3: new BVParser(EventList.this).execute(); break;
-	            	
-	            	case 4: new MSLParser(EventList.this).execute(); break;
-	            	
-	            	default: break;
-	            }
-	            currentBlog = blogs[pos];
-	            getActionBar().setTitle(currentBlog);
-	            drawer.setDrawerListener(
-	        	    new DrawerLayout.SimpleDrawerListener()
-	        	    {
-	        		public void onDrawerClosed(View drawerView)
-	        		{
-	                    super.onDrawerClosed(drawerView);
-	        		}
-	            });
-	            drawer.closeDrawer(mDrawerList);
-	        }
-	    });
-		//Start app with drawer open
-	drawer.openDrawer(mDrawerList);
-	}
+	setStyling(savedInstanceState);
+	setupDrawer(savedInstanceState);
+    }
 
     
+    public void setupDrawer(Bundle bundle) {
+	//Create the drawer
+    	drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+    	drawerList = (ListView) findViewById(R.id.left_drawer);
+    	drawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_list_item, blogs));
+    	
+    	
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
+    	// ActionBarDrawerToggle ties together the the proper interactions
+    	// between the sliding drawer and the action bar app icon
+        drawerToggle = new ActionBarDrawerToggle(this, /* host Activity */
+        			drawer, /* DrawerLayout object */
+        			R.drawable.ic_drawer, /* nav drawer image to replace 'Up' caret */
+        			R.string.drawer_open, /* "open drawer" description for accessibility */
+        			R.string.drawer_close /* "close drawer" description for accessibility */
+            ) {
+                public void onDrawerClosed(View view) {
+                    invalidateOptionsMenu(); // creates call to
+                                             // onPrepareOptionsMenu()
+                }
+
+                public void onDrawerOpened(View drawerView) {
+                    invalidateOptionsMenu(); // creates call to
+                                             // onPrepareOptionsMenu()
+                }
+            };
+            
+    		
+    	//Set the onClickListener for the drawer
+    	drawerList.setOnItemClickListener(new OnItemClickListener()
+    	    {
+    	        @Override
+    	        public void onItemClick(AdapterView<?> parent,
+    	                View view, final int pos, long id)
+    	        {
+    	            //This is where the switching will occur to decide which feed gets pulled 
+    	            switch (pos) {
+    	            	case 1: new OMRParser(EventList.this).execute(); break;
+    	            	
+    	            	case 2: new ArtCardsParser(EventList.this).execute(); break;
+    	            	
+    	            	case 3: new BVParser(EventList.this).execute(); break;
+    	            	
+    	            	case 4: new MSLParser(EventList.this).execute(); break;
+    	            	
+    	            	default: break;
+    	            }
+    	            currentBlog = blogs[pos];
+    	            actionBar.setTitle(currentBlog);
+    	            drawer.setDrawerListener(
+    	        	    new DrawerLayout.SimpleDrawerListener() {
+    	        		public void onDrawerClosed(View drawerView) {
+    	        		    super.onDrawerClosed(drawerView);
+    	        		}
+    	        	    }
+    	            );
+    	            drawer.closeDrawer(drawerList);
+    	        }
+    	    });
+    	//drawer.openDrawer(drawerList);
+    	}
+    	
+    	public void setStyling(Bundle bundle) {
+        	//Set font in action bar
+        	Typeface actionBarType = Typeface.createFromAsset(this.getAssets(), "fonts/Raleway-Medium.otf");
+        	final int titleId = Resources.getSystem().getIdentifier("action_bar_title", "id", "android");
+        	TextView title = (TextView) getWindow().findViewById(titleId);
+        	title.setTypeface(actionBarType);
+        	actionBar = getActionBar();
+        	//actionBar.setDisplayShowHomeEnabled(false);
+        	actionBar.setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
+        	actionBar.setDisplayHomeAsUpEnabled(true);
+        	actionBar.setDisplayUseLogoEnabled(false);
+        	actionBar.setDisplayShowTitleEnabled(true);
+    	}
     
     
     	public void setList(ListRow[] listrowData) {
@@ -142,7 +178,52 @@ public class EventList extends Activity {
 	
 
 	
-	
+        /* Called whenever we call invalidateOptionsMenu() */
+        @Override
+        public boolean onPrepareOptionsMenu(Menu menu) {
+            // If the nav drawer is open, hide action items related to the content view
+            boolean drawerOpen = drawer.isDrawerOpen(drawerList);
+            //menu.findItem(R.id.action_websearch).setVisible(!drawerOpen);
+            return super.onPrepareOptionsMenu(menu);
+        }
+        
+        @Override
+        protected void onPostCreate(Bundle savedInstanceState) {
+            super.onPostCreate(savedInstanceState);
+            // Sync the toggle state after onRestoreInstanceState has occurred.
+            drawerToggle.syncState();
+        }
+
+        @Override
+        public void onConfigurationChanged(Configuration newConfig) {
+            super.onConfigurationChanged(newConfig);
+            drawerToggle.onConfigurationChanged(newConfig);
+        }
+        
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            // Pass the event to ActionBarDrawerToggle, if it returns
+            // true, then it has handled the app icon touch event
+            if (drawerToggle.onOptionsItemSelected(item)) {
+                return true;
+            }
+            switch (item.getItemId()) {
+            case android.R.id.home:
+                // This ID represents the Home or Up button. In the case of this
+                // activity, the Up button is shown. Use NavUtils to allow users
+                // to navigate up one level in the application structure. For
+                // more details, see the Navigation pattern on Android Design:
+                //
+                // http://developer.android.com/design/patterns/navigation.html#up-vs-back
+                //
+                // NavUtils.navigateUpFromSameTask(this);
+                return true;
+            }
+            return super.onOptionsItemSelected(item);
+        }
+
+
+       
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
