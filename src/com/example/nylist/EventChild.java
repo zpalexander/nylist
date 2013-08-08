@@ -38,7 +38,7 @@ public class EventChild extends Activity{
 	actionBar.setDisplayShowHomeEnabled(false);
 	actionBar.setDisplayUseLogoEnabled(false);
 		
-	Typeface titleType = Typeface.createFromAsset(this.getAssets(), "fonts/Raleway-Light.otf");
+	Typeface titleType = Typeface.createFromAsset(this.getAssets(), "fonts/Raleway-Medium.otf");
 	Typeface textType = Typeface.createFromAsset(this.getAssets(), "fonts/helveticaneue-webfont.ttf");
 
 	//Retrieve event values from previous activity
@@ -150,7 +150,7 @@ public class EventChild extends Activity{
 	
 	
 	public void buyTickets(View view) {
-	    goToUrl (ticketLinkString);
+	    goToUrl(ticketLinkString);
 	}
 	
 	private void goToUrl (String url) {

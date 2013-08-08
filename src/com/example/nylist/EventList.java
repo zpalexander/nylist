@@ -41,6 +41,7 @@ public class EventList extends Activity {
     //The blogs included in the drawer
     private String[] blogs = {"Favorites","Oh My Rockness","artcards","Brooklyn Vegan","My Social List", "Village Voice"};
     public String currentBlog = "NYList";
+    public int positionInBlogArray = -1;
     
     //The array holding the current list's objects
     public ListRow[] eventArray;
@@ -95,22 +96,8 @@ public class EventList extends Activity {
     	        public void onItemClick(AdapterView<?> parent,
     	                View view, final int pos, long id)
     	        {
-    	            if (isNetworkAvailable()) {
-    	        	//This is where the switching will occur to decide which feed gets pulled 
-    	        	switch (pos) {
-    	            		case 1: new OMRParser(EventList.this).execute(); break;
-    	            	
-    	            		case 2: new ArtCardsParser(EventList.this).execute(); break;
-    	            	
-    	            		case 3: new BVParser(EventList.this).execute(); break;
-    	            	
-    	            		case 4: new MSLParser(EventList.this).execute(); break;
-    	            	
-    	            		default: break;
-    	        	}
-    	            }
-    	            currentBlog = blogs[pos];
-    	            actionBar.setTitle(currentBlog);
+    	            populateList(pos);
+    	            positionInBlogArray = pos;
     	            drawer.setDrawerListener(
     	        	    new DrawerLayout.SimpleDrawerListener() {
     	        		public void onDrawerClosed(View drawerView) {
@@ -147,29 +134,31 @@ public class EventList extends Activity {
 	    eventArray = listrowData;
     	}
     	
+    	public void populateList(int p) {
+    	if (isNetworkAvailable()) {
+        	//This is where the switching will occur to decide which feed gets pulled 
+        	switch (p) {
+            		case 1: new OMRParser(EventList.this).execute(); break;
+            	
+            		case 2: new ArtCardsParser(EventList.this).execute(); break;
+            	
+            		case 3: new BVParser(EventList.this).execute(); break;
+            	
+            		case 4: new MSLParser(EventList.this).execute(); break;
+            	
+            		default: break;
+        	}
+        	currentBlog = blogs[p];
+        	actionBar.setTitle(currentBlog);
+            }
+    	}
+    	
     	private boolean isNetworkAvailable() {
     	    ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
     	    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
     	    return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     	}
-    	                                          
-	
-	public void testPopulate() {
-	    //Populate the list
-	    int eventCount = 15;
-	    ListRow[] listrow_data = new ListRow[eventCount];
-	    ListRow temp;
-	    for (int i=0;i<eventCount;i++) {
-		temp = new ListRow(this,"Event Title","1/1/13", "8:00pm","$7","285 Kent","www.ohmyrockness.com", i);
-		listrow_data[i] = temp;	
-	    }
-		
-	    ListRowAdapter adapter = new ListRowAdapter(this, R.layout.list_row, listrow_data);
-	    listView = (ListView)findViewById(R.id.list);
-	    listView.setAdapter(adapter);
-	}
-	
-	
+    	                                      
 
 	public void openChild(View view) {
 	    Intent intent = new Intent(EventList.this, EventChild.class);
@@ -214,7 +203,15 @@ public class EventList extends Activity {
             drawerToggle.onConfigurationChanged(newConfig);
         }
         
-        @Override
+       
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.event_list, menu);
+		return true;
+	}
+	
+	@Override
         public boolean onOptionsItemSelected(MenuItem item) {
             // Pass the event to ActionBarDrawerToggle, if it returns
             // true, then it has handled the app icon touch event
@@ -232,29 +229,34 @@ public class EventList extends Activity {
                 //
                 // NavUtils.navigateUpFromSameTask(this);
                 return true;
+                
+            case R.id.refresh: refreshList();
+            
+            case R.id.view_website: viewInBrowser(item.getActionView());
             }
             return super.onOptionsItemSelected(item);
         }
-
-
-       
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.event_list, menu);
-		return true;
+	
+	
+	
+	public void refreshList() {
+	    populateList(positionInBlogArray);
 	}
 	
-	public boolean viewInBrowser(MenuItem item) {
-	    goToUrl("www.ohmyrockness.com");
-	    return true;
+	public void viewInBrowser(View view) {
+	    if (positionInBlogArray != -1) {
+		String[] blogURLs = {null, "http://www.ohmyrockness.com","http://artcards.cc","http://www.brooklynvegan.com","http://www.mysocialist.com", null};
+		goToUrl(blogURLs[positionInBlogArray]);
+	    }
 	}
 	
 	private void goToUrl (String url) {
+	    if (url != null) {
 	        Uri uriUrl = Uri.parse(url);
 	        Intent launchBrowser = new Intent(Intent.ACTION_VIEW, uriUrl);
 	        startActivity(launchBrowser);
 	    }
+	}
 
 
 	
