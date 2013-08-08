@@ -93,20 +93,24 @@ public class EventChild extends Activity{
 	
 	@SuppressLint("NewApi")
 	public void addToCalendar(View view) {
-	    if ((dateString != null) && (timeString != null)) {
+	    if (dateString != null) {
         	    //Parse date 
         	    String dateDelim = "/";
         	    String[] dateTokens = dateString.split(dateDelim);
         	    int month = Integer.parseInt(dateTokens[0]);
         	    int day = Integer.parseInt(dateTokens[1]);
+        	    int startHour = 8;
+        	    int startMinute = 00;
         	    
         	    //Parse time
-        	    String timeDelim = ":";
-        	    String[] timeTokens = timeString.split(timeDelim);
-        	    int startHour = Integer.parseInt(timeTokens[0]);
-        	    char[] minuteCharArray = timeTokens[1].toCharArray();
-        	    String minutes = new StringBuilder().append(minuteCharArray[0]).append(minuteCharArray[1]).toString();
-        	    int startMinute = Integer.parseInt(minutes);
+        	    if (timeString != null) {
+                	    String timeDelim = ":";
+                	    String[] timeTokens = timeString.split(timeDelim);
+                	    startHour = Integer.parseInt(timeTokens[0]);
+                	    char[] minuteCharArray = timeTokens[1].toCharArray();
+                	    String minutes = new StringBuilder().append(minuteCharArray[0]).append(minuteCharArray[1]).toString();
+                	    startMinute = Integer.parseInt(minutes);
+        	    }
         
         	    Calendar beginTime = Calendar.getInstance();
         	    beginTime.set(2013, (month-1), day, startHour, startMinute);
@@ -129,17 +133,19 @@ public class EventChild extends Activity{
 	}
 	
 	
-	public  void viewLocation(View view) {
-	    String delim = "[ ]";
-	    String[] tokens = locationString.split(delim);
-	    String temp = "";
-	    for (int i=0; i<tokens.length; i++) {
-		temp = temp + tokens[i] + "+";
+	public void viewLocation(View view) {
+	    if (locationString != null) {
+        	    String delim = "[ ]";
+        	    String[] tokens = locationString.split(delim);
+        	    String temp = "";
+        	    for (int i=0; i<tokens.length; i++) {
+        		temp = temp + tokens[i] + "+";
+        	    }
+        	    String query = ("geo:0,0?q="+temp+",+New+York,+New+York");
+        	    Uri locationUri = Uri.parse(query);
+        	    Intent mapIntent = new Intent(Intent.ACTION_VIEW, locationUri);
+        	    startActivity(mapIntent);
 	    }
-	    String query = ("geo:0,0?q="+temp+",+New+York,+New+York");
-	    Uri locationUri = Uri.parse(query);
-	    Intent mapIntent = new Intent(Intent.ACTION_VIEW, locationUri);
-	    startActivity(mapIntent);
 	}
 	
 	

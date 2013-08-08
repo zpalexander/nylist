@@ -7,7 +7,7 @@
     <string name="default_title">Event Title</string>
     <string name="default_location">Location</string>
     <string name="default_price">$10</string>
-    <string name="default_date">1/1/13</string>
+    <string name="default_date">1/18</string>
     
     <string name="arrow_description">Arrow</string>
     <string name="drawer_open">Drawer Open</string>
