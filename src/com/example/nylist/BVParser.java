@@ -2,6 +2,7 @@ package com.example.nylist;
 
 import java.io.IOException;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
@@ -34,7 +35,9 @@ public class BVParser extends AsyncTask<Void, Void, String[][]> {
     @Override
     protected void onPreExecute() {
        super.onPreExecute();
-       dialog = ProgressDialog.show(activity, "", "Loading",true);
+       dialog = new ProgressDialog(activity, AlertDialog.THEME_HOLO_DARK);
+       dialog.setMessage("Summarizing blog...");
+       dialog.show();
     }
 
     @Override

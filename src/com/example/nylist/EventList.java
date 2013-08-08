@@ -2,10 +2,14 @@ package com.example.nylist;
 
 
 
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -54,6 +58,7 @@ public class EventList extends Activity {
     }
 
     
+    @SuppressLint("NewApi")
     public void setupDrawer(Bundle bundle) {
 	//Create the drawer
     	drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -90,17 +95,19 @@ public class EventList extends Activity {
     	        public void onItemClick(AdapterView<?> parent,
     	                View view, final int pos, long id)
     	        {
-    	            //This is where the switching will occur to decide which feed gets pulled 
-    	            switch (pos) {
-    	            	case 1: new OMRParser(EventList.this).execute(); break;
+    	            if (isNetworkAvailable()) {
+    	        	//This is where the switching will occur to decide which feed gets pulled 
+    	        	switch (pos) {
+    	            		case 1: new OMRParser(EventList.this).execute(); break;
     	            	
-    	            	case 2: new ArtCardsParser(EventList.this).execute(); break;
+    	            		case 2: new ArtCardsParser(EventList.this).execute(); break;
     	            	
-    	            	case 3: new BVParser(EventList.this).execute(); break;
+    	            		case 3: new BVParser(EventList.this).execute(); break;
     	            	
-    	            	case 4: new MSLParser(EventList.this).execute(); break;
+    	            		case 4: new MSLParser(EventList.this).execute(); break;
     	            	
-    	            	default: break;
+    	            		default: break;
+    	        	}
     	            }
     	            currentBlog = blogs[pos];
     	            actionBar.setTitle(currentBlog);
@@ -117,7 +124,8 @@ public class EventList extends Activity {
     	//drawer.openDrawer(drawerList);
     	}
     	
-    	public void setStyling(Bundle bundle) {
+    	@SuppressLint("NewApi")
+	public void setStyling(Bundle bundle) {
         	//Set font in action bar
         	Typeface actionBarType = Typeface.createFromAsset(this.getAssets(), "fonts/Raleway-Medium.otf");
         	final int titleId = Resources.getSystem().getIdentifier("action_bar_title", "id", "android");
@@ -137,6 +145,12 @@ public class EventList extends Activity {
 	    listView = (ListView)findViewById(R.id.list);
 	    listView.setAdapter(adapter);
 	    eventArray = listrowData;
+    	}
+    	
+    	private boolean isNetworkAvailable() {
+    	    ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+    	    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+    	    return activeNetworkInfo != null && activeNetworkInfo.isConnected();
     	}
     	                                          
 	
